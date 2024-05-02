@@ -7,9 +7,16 @@ class Author(models.Model):
     authorUser=models.OneToOneField(User,on_delete=models.CASCADE)
     authorRating=models.IntegerField(default=0)
     def update_rating(self):
-        sumRating=self.post_set.aggregate(postRating=Sum('newsRating'))
+        sumRating = self.post_set.aggregate(postRating=Sum('newsRating'))
         pRat = 0
         pRat += sumRating.get('postRating')
+
+        commentRat = self.authorUser.comment_set.aggregate(commentRating=Sum('rating'))
+        cRat = 0
+        cRat = commentRat.get('commentRating')
+
+        self.authorRating = pRat*3 + cRat
+        self.save()
 
 
 class Category(models.Model):
@@ -54,13 +61,12 @@ class Comment(models.Model):
     commentUser = models.ForeignKey(User,on_delete=models.CASCADE)
     commentCreation = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
-    commentRating = models.IntegerField(default=0)
-
+    rating = models.IntegerField(default=0)
 
     def like(self):
-        self.commentRating += 1
+        self.rating += 1
         self.save()
 
     def dislike(self):
-        self.commentRating -= 1
+        self.rating -= 1
         self.save()
