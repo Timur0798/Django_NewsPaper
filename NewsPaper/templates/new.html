@@ -1,0 +1,10 @@
+<!--!&#45;&#45;  наследуемся от шаблона default.html, который мы создавали для flatpages &ndash;&gt;-->
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Post
+{% endblock title %}
+
+{% block content %}
+<h1>{{ new }}</h1>
+{% endblock content %}
