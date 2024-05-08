@@ -1,10 +1,13 @@
-<!--!&#45;&#45;  наследуемся от шаблона default.html, который мы создавали для flatpages &ndash;&gt;-->
 {% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
 
 {% block title %}
 Post
 {% endblock title %}
 
 {% block content %}
-<h1>{{ new }}</h1>
+<h1>{{ new.title|censor }}</h1>
+<h2>{{ new.creationTime|date:'d M Y' }}</h2>
+<h3>{{ new.text|censor }}</h3>
 {% endblock content %}
