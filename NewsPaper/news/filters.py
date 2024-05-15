@@ -16,8 +16,9 @@ class PostFilter(FilterSet):
         lookup_expr='gt',
         widget=DateTimeInput(
             format='%Y-%m-%dT%H:%M',
-            attrs={'type': 'datetime-local'},
-        ))
+            attrs={'type': 'datetime-local'}),
+        label='Опубликована позднее:'
+        )
 
     class Meta:
        model = Post

@@ -7,7 +7,8 @@ Post
 {% endblock title %}
 
 {% block content %}
-<h1>{{ new.title|censor }}</h1>
-<h2>{{ new.creationTime|date:'d M Y' }}</h2>
+<h1>{{ new.author }}</h1>
+<h2>{{ new.title|censor }}</h2>
 <h3>{{ new.text|censor }}</h3>
+<h4>{{ new.creationTime|date:'d M Y' }}</h4>
 {% endblock content %}

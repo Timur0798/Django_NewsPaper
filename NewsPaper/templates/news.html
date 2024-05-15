@@ -8,23 +8,27 @@ News
 
 {% block content %}
    <h1>Все новости</h1>
-   <h2>Общее количество: {{ news|length }}</h2>
+   <h2>Общее количество: {{ page_obj.paginator.count }}</h2>
    <h3>{{ time_now|date:'d M Y' }}</h3>
 
    <hr>
    {% if news %}
        <table>
            <tr>
+               <td>ID публикации</td>
                <td>Заголовок</td>
                <td>Дата публикации</td>
                <td>Описание</td>
+               <td>Тип публикации</td>
            </tr>
 
            {% for new in news %}
            <tr>
+               <td>{{ new.pk }}</td>
                <td>{{ new.title|censor }}</td>
                <td>{{ new.creationTime|date:'d M Y' }}</td>
-               <td>{{ new.text|truncatewords:20|censor }}</td>
+               <td>{{ new.text|truncatewords:10|censor }}</td>
+               <td>{{ new.categoryType }}</td>
            </tr>
            {% endfor %}
 
