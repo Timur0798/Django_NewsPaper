@@ -21,13 +21,17 @@
                <td>Заголовок</td>
                <td>Дата публикации</td>
                <td>Описание</td>
+               <td>Категория</td>
            </tr>
 
            {% for new in search %}
            <tr>
                <td>{{ new.title|censor }}</td>
                <td>{{ new.creationTime|date:'d M Y' }}</td>
-               <td>{{ new.text|truncatewords:20|censor }}</td>
+               <td>{{ new.text|truncatewords:4|censor }}</td>
+               {% for cat in new.newsCategory.all %}
+               <td>{{ cat.name }}</td>
+               {% endfor %}
            </tr>
            {% endfor %}
 

@@ -4,19 +4,21 @@ from .models import Post, Category
 
 
 class PostFilter(FilterSet):
+    category = ModelMultipleChoiceFilter(
+        field_name='newsCategory',
+        lookup_expr='exact',
+        queryset=Category.objects.all(),
+        label='Категория'
+    )
+
     added_after = DateTimeFilter(
-        field_name='added_at',
+        field_name='creationTime',
         lookup_expr='gt',
         widget=DateTimeInput(
             format='%Y-%m-%dT%H:%M',
             attrs={'type': 'datetime-local'},
         ))
-    category=ModelMultipleChoiceFilter(
-        field_name='categoryType',
-        lookup_expr='exact',
-        queryset=Category.objects.all(),
-        label='Категория'
-    )
+
     class Meta:
        model = Post
        fields = {
