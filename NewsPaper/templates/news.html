@@ -11,6 +11,14 @@ News
    <h2>Общее количество: {{ page_obj.paginator.count }}</h2>
    <h3>{{ time_now|date:'d M Y' }}</h3>
 
+    {% if perms.news.add_post %}
+    <a href="{% url 'news_create' %}">Добавить новость</a>
+    {% endif %}
+
+    {% if perms.news.add_post %}
+    <a href="{% url 'article_create' %}">Добавить статью</a>
+    {% endif %}
+
    <hr>
    {% if news %}
        <table>
@@ -20,6 +28,10 @@ News
                <td>Дата публикации</td>
                <td>Описание</td>
                <td>Тип публикации</td>
+
+               {% if perms.news.change_post or perms.news.delete_post %}
+                   <td>Действия</td>
+               {% endif %}
            </tr>
 
            {% for new in news %}
@@ -29,9 +41,25 @@ News
                <td>{{ new.creationTime|date:'d M Y' }}</td>
                <td>{{ new.text|truncatewords:10|censor }}</td>
                <td>{{ new.categoryType }}</td>
+
+               <td>
+                   {% if perms.news.change_post %}
+                       {% if post.categoryType == 'NW' %}
+                           <td><a href="{% url 'news_edit' pk=new.id %}">Изменить</a></td>
+                       {% else %}
+                           <td><a href="{% url 'article_edit' pk=new.id %}">Изменить</a></td>
+                       {% endif %}
+                   {% endif %}
+                   {% if perms.news.delete_post %}
+                       {% if post.categoryType == 'NW' %}
+                           <td><a href="{% url 'news_delete' pk=new.id %}">Удалить</a></td>
+                       {% else %}
+                           <td><a href="{% url 'article_delete' pk=new.id %}">Удалить</a></td>
+                       {% endif %}
+                   {% endif %}
+               </td>
            </tr>
            {% endfor %}
-
        </table>
    {% else %}
        <h2>Новостей нет!</h2>
